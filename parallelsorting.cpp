@@ -16,7 +16,7 @@
 #include "libmorton/libmorton/include/morton.h"
 
 using namespace std;
-int rows = 16;
+int rows = 32;
 int **mat1;
 int *mat2;
 unsigned int morton;
@@ -68,7 +68,7 @@ void mergesort(Iter begin, Iter end,
         }
 
         Iter mid = next(begin, len/2);
-        auto fn = async(mergesort_mt3<Iter>, begin, mid, N-2);
+        auto fn = async(mergesort<Iter>, begin, mid, N-2);
         mergesort(mid, end, N-2);
         fn.wait();
         inplace_merge(begin, mid, end);
@@ -146,7 +146,7 @@ int main(){
 
         }
 
-        mergesort_mt3(mat2,mat2+rows);
+        mergesort(mat2,mat2+rows);
 
         cout<<"Sorted Encoding"<<endl;
         for(i = 0; i < rows; i++) {
